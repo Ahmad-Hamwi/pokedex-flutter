@@ -1,6 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/androidstudio,flutter
-# Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,flutter
-
 ### Flutter ###
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -64,6 +61,25 @@ lib/generated_plugin_registrant.dart
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
 
 ### AndroidStudio ###
 # Covers files to be ignored for android development using Android Studio.
@@ -195,5 +211,3 @@ fabric.properties
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar
-
-# End of https://www.toptal.com/developers/gitignore/api/androidstudio,flutter
