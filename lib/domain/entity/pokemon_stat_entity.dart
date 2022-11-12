@@ -1,8 +1,8 @@
 import 'entity.dart';
 
 class PokemonStatEntity extends Entity {
-  String baseStat;
-  num value;
+  String name;
+  num baseStat;
 
-  PokemonStatEntity(int id, this.baseStat, this.value) : super(id);
+  PokemonStatEntity(int id, this.name, this.baseStat) : super(id);
 }

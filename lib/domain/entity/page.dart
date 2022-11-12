@@ -9,3 +9,9 @@ class Page<T> {
 
   Page(this.pageNumber, this.totalPages, this.items);
 }
+
+extension PageExtensions<T> on Page<T> {
+  Page<R> map<R>(R Function(T t) mapper) {
+    return Page(pageNumber, totalPages, items.map((e) => mapper(e)).toList());
+  }
+}
