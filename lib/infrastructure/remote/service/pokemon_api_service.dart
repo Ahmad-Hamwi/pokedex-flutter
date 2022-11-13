@@ -1,5 +1,5 @@
-import 'package:pokedex/infrastructure/util/json_util.dart';
 import 'package:pokedex/infrastructure/remote/const/api_endpoints.dart';
+import 'package:pokedex/infrastructure/util/json_util.dart';
 
 import '../client/api_client.dart';
 import '../dto/get_pokemons_request_params.dart';
@@ -31,8 +31,10 @@ class PokemonApiService implements IPokemonService {
 
   @override
   Future<PokemonRemoteModel> getPokemon(int id) {
+    final url = "${ApiEndpoints.pokemon}/$id/";
     return _apiClient
-        .get("${ApiEndpoints.pokemon}/$id/")
-        .then((response) => PokemonRemoteModel.fromJson(response.data));
+        .get(url)
+        .then((response) => PokemonRemoteModel.fromJson(response.data))
+        .then((modelWithoutUrl) => modelWithoutUrl.copyWith(url: url));
   }
 }
