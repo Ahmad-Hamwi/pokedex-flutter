@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pokedex/infrastructure/remote/exception/exception_factory.dart';
 
 import 'api_client.dart';
@@ -27,7 +28,7 @@ class DioApiClient implements IApiClient {
           ),
           queryParameters: params,
         )
-        .onError(_mapError);
+        .onError(mapError);
   }
 
   @override
@@ -47,7 +48,7 @@ class DioApiClient implements IApiClient {
           queryParameters: params,
           data: body,
         )
-        .onError(_mapError);
+        .onError(mapError);
   }
 
   @override
@@ -62,18 +63,19 @@ class DioApiClient implements IApiClient {
           queryParameters: params,
           data: FormData.fromMap(formData),
         )
-        .onError(_mapError);
+        .onError(mapError);
   }
 
-  Future<Response> _mapError(error, stackTrace) {
+  @visibleForTesting
+  Future<Response> mapError(error, stackTrace) async {
     if (error is! DioError) {
-      Future.error(error);
+      return Future.error(error);
     }
 
     final response = error.response;
 
     if (response == null) {
-      Future.error(error);
+      return Future.error(error);
     }
 
     Exception exceptionFromResponse =
