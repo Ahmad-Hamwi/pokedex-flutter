@@ -54,4 +54,22 @@ class PokemonRemoteModel extends RemoteModel {
             .toList(),
         false,
       );
+
+  PokemonRemoteModel copyWith({
+    String? name,
+    List<PokemonTypeRemoteModel>? types,
+    num? height,
+    num? weight,
+    List<PokemonStatRemoteModel>? stats,
+    String? url,
+  }) {
+    return PokemonRemoteModel(
+      name ?? this.name,
+      types ?? this.types,
+      height ?? this.height,
+      weight ?? this.weight,
+      stats ?? this.stats,
+      url ?? this.url,
+    );
+  }
 }

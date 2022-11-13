@@ -29,6 +29,18 @@ class PokemonRepositoryImpl extends Repository implements IPokemonRepository {
   }
 
   @override
+  Future<PokemonEntity> getPokemon(int id) async {
+    final remotePokemon = await _pokemonRemoteDatasource.getPokemon(id);
+    final cachedFavourites =
+        await _pokemonCacheDatasource.getFavouritePokemons();
+    if (cachedFavourites.any((favId) => favId == id)) {
+      return remotePokemon.copyWith(isFavourite: true);
+    } else {
+      return remotePokemon;
+    }
+  }
+
+  @override
   Future<PokemonEntity> savePokemon(PokemonEntity pokemonToBeSaved) async {
     await _pokemonCacheDatasource.setFavouritePokemon(
         pokemonToBeSaved.id, pokemonToBeSaved.isFavourite);
