@@ -10,6 +10,10 @@ class UrlUtils {
       return null;
     }
 
+    if (splits.length >= 2 && splits[splits.length - 1].isEmpty) {
+      return splits[splits.length - 2];
+    }
+
     return splits[splits.length - 1];
   }
 
@@ -19,7 +23,7 @@ class UrlUtils {
     if (result == null) {
       return null;
     } else {
-      return int.parse(result);
+      return int.tryParse(result);
     }
   }
 }
