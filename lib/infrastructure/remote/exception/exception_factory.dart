@@ -13,7 +13,7 @@ class ResponseCodeExceptionFactory implements IRemoteExceptionFactory {
       case ResponseCode.serverException:
         return ServerException();
       default:
-        throw UnimplementedError("Response code not implemented");
+        return RemoteException("Response code $code not implemented");
     }
   }
 }
