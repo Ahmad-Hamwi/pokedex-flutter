@@ -21,11 +21,11 @@ class AppCacheImpl implements IAppCache {
     final favourites = _sharedPreferences.getStringList(favPokemonKey);
 
     if (favourites == null) {
-      _sharedPreferences.setStringList(favPokemonKey, [id.toString()]);
+      await _sharedPreferences.setStringList(favPokemonKey, [id.toString()]);
       return;
     }
 
-    _sharedPreferences
+    await _sharedPreferences
         .setStringList(favPokemonKey, [...favourites, id.toString()]);
   }
 
@@ -44,12 +44,12 @@ class AppCacheImpl implements IAppCache {
   Future<void> removePokemonFromFavourite(int id) async {
     final favourites = _sharedPreferences.getStringList(favPokemonKey);
 
-    if (favourites == null) {
+    if (favourites == null || !favourites.any((e) => e == id.toString())) {
       throw NotCachedException("pokemon with $id not found");
     }
 
     favourites.remove(id.toString());
 
-    _sharedPreferences.setStringList(favPokemonKey, favourites);
+    await _sharedPreferences.setStringList(favPokemonKey, favourites);
   }
 }
