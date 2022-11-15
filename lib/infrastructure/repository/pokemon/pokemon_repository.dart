@@ -15,17 +15,58 @@ class PokemonRepositoryImpl extends Repository implements IPokemonRepository {
       this._pokemonRemoteDatasource, this._pokemonCacheDatasource);
 
   @override
-  Future<Page<PokemonEntity>> getPokemons(
+  Future<PageEntity<PokemonEntity>> getPokemons(
       GetPokemonsUseCaseParams params) async {
-    final remotePokemons = await _pokemonRemoteDatasource.getPokemons(params);
+    final remotePokemonsPage =
+        await _pokemonRemoteDatasource.getPokemons(params);
+
+    final remoteDetailedPokemons = await Future.wait(
+      remotePokemonsPage.items
+          .map((t) async => await _pokemonRemoteDatasource.getPokemon(t.id))
+          .toList(),
+    );
+
+    final remoteDetailedPokemonsPage = PageEntity(
+      remotePokemonsPage.pageNumber,
+      remotePokemonsPage.totalPages,
+      remoteDetailedPokemons,
+    );
+
     final cachedFavourites =
         await _pokemonCacheDatasource.getFavouritePokemons();
-    final pokemonsWithCorrectFavourite = remotePokemons.map((remotePokemon) =>
-        cachedFavourites.any((favId) => remotePokemon.id == favId) //is fav?
-            ? remotePokemon.copyWith(isFavourite: true) //mark it as fav
-            : remotePokemon); //otherwise take it as it is
+    final pokemonsWithCorrectFavourite = remoteDetailedPokemonsPage.map(
+        (remotePokemon) =>
+            cachedFavourites.any((favId) => remotePokemon.id == favId) //is fav?
+                ? remotePokemon.copyWith(isFavourite: true) //mark it as fav
+                : remotePokemon); //otherwise take it as it is
 
     return pokemonsWithCorrectFavourite;
+  }
+
+  @override
+  Future<PageEntity<PokemonEntity>> getFavouritePokemons(
+      GetPokemonsUseCaseParams params) async {
+    final cachedFavouritesIds =
+        await _pokemonCacheDatasource.getFavouritePokemons();
+
+    final cachedFavouriteIdsPaginated = [];
+    for (int i = 0; i < cachedFavouritesIds.length; i++) {
+      if (i < (params.pageSize * params.pageNumber) - params.pageSize) continue;
+      if (i >= params.pageSize * params.pageNumber) continue;
+      cachedFavouriteIdsPaginated.add(cachedFavouritesIds[i]);
+    }
+
+    final remoteDetailedPokemons = await Future.wait(
+      cachedFavouriteIdsPaginated
+          .map((id) async => await _pokemonRemoteDatasource.getPokemon(id))
+          .toList(),
+    );
+
+    return PageEntity(
+      params.pageNumber,
+      (cachedFavouritesIds.length / params.pageSize).ceil(),
+      remoteDetailedPokemons,
+    );
   }
 
   @override
@@ -46,5 +87,10 @@ class PokemonRepositoryImpl extends Repository implements IPokemonRepository {
         pokemonToBeSaved.id, pokemonToBeSaved.isFavourite);
 
     return pokemonToBeSaved;
+  }
+
+  @override
+  Future<int> getFavouritesCount() async {
+    return (await _pokemonCacheDatasource.getFavouritePokemons()).length;
   }
 }

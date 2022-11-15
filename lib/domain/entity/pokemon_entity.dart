@@ -5,20 +5,24 @@ import 'entity.dart';
 
 class PokemonEntity extends Entity {
   final String name;
-  final List<PokemonTypeEntity> types;
+  final String? imageUrl;
+  final List<PokemonTypeEntity>? types;
 
-  final num height;
-  final num weight;
+  final num? height;
+  final num? weight;
 
-  num get bmi => weight / (height * height);
+  num? get bmi => (weight == null || height == null)
+      ? null
+      : (weight! / (height! * height!));
 
-  final List<PokemonStatEntity> stats;
+  final List<PokemonStatEntity>? stats;
 
   final bool isFavourite;
 
   PokemonEntity(
     int id,
     this.name,
+    this.imageUrl,
     this.types,
     this.height,
     this.weight,
@@ -28,6 +32,7 @@ class PokemonEntity extends Entity {
 
   PokemonEntity copyWith({
     String? name,
+    String? imageUrl,
     List<PokemonTypeEntity>? types,
     num? height,
     num? weight,
@@ -35,8 +40,9 @@ class PokemonEntity extends Entity {
     bool? isFavourite,
   }) =>
       PokemonEntity(
-        this.id,
+        id,
         name ?? this.name,
+        imageUrl ?? this.imageUrl,
         types ?? this.types,
         height ?? this.height,
         weight ?? this.weight,

@@ -7,7 +7,7 @@ import 'package:pokedex/infrastructure/remote/service/pokemon_api_service.dart';
 import 'package:pokedex/infrastructure/repository/base/datasource.dart';
 
 abstract class IPokemonRemoteDatasource {
-  Future<Page<PokemonEntity>> getPokemons(GetPokemonsUseCaseParams params);
+  Future<PageEntity<PokemonEntity>> getPokemons(GetPokemonsUseCaseParams params);
 
   Future<PokemonEntity> getPokemon(int id);
 }
@@ -26,7 +26,7 @@ class PokemonRemoteDatasourceImpl extends Datasource
   }
 
   @override
-  Future<Page<PokemonEntity>> getPokemons(GetPokemonsUseCaseParams params) {
+  Future<PageEntity<PokemonEntity>> getPokemons(GetPokemonsUseCaseParams params) {
     return service
         .getPokemons(
             PaginationRequestParams(params.pageNumber, params.pageSize))

@@ -1,4 +1,4 @@
-class Page<T> {
+class PageEntity<T> {
   final num pageNumber;
   final num totalPages;
   final List<T> items;
@@ -7,11 +7,14 @@ class Page<T> {
 
   num? get previousPageNumber => pageNumber == 1 ? null : pageNumber - 1;
 
-  Page(this.pageNumber, this.totalPages, this.items);
+  bool get isLastPage => pageNumber == totalPages;
+
+  PageEntity(this.pageNumber, this.totalPages, this.items);
 }
 
-extension PageExtensions<T> on Page<T> {
-  Page<R> map<R>(R Function(T t) mapper) {
-    return Page(pageNumber, totalPages, items.map((e) => mapper(e)).toList());
+extension PageExtensions<T> on PageEntity<T> {
+  PageEntity<R> map<R>(R Function(T t) mapper) {
+    return PageEntity(
+        pageNumber, totalPages, items.map((e) => mapper(e)).toList());
   }
 }

@@ -24,20 +24,24 @@ class PageRemoteModel<T> {
 }
 
 extension MappingExtension<T extends RemoteModel> on PageRemoteModel<T> {
-  Page<R> mapToEntity<R extends Entity>() {
+  PageEntity<R> mapToEntity<R extends Entity>() {
     final totalPages = (count / results.length).ceil();
     final mappedItems = results.map((e) => e.mapToEntity() as R).toList();
 
-    final int? nextPageNumber = UrlUtils.extractLastUrlParamAsInt(next);
-    if (nextPageNumber != null) {
-      return Page(nextPageNumber - 1, totalPages, mappedItems);
+    final Uri? nextUrl = Uri.tryParse(next ?? '');
+    final String? nextOffset = nextUrl?.queryParameters["offset"];
+    if (nextUrl != null && nextOffset != null) {
+      final nextPageNumber = (int.parse(nextOffset) / results.length) + 1;
+      return PageEntity(nextPageNumber - 1, totalPages, mappedItems);
     }
 
-    final int? previousPageNumber = UrlUtils.extractLastUrlParamAsInt(previous);
-    if (previousPageNumber != null) {
-      return Page(previousPageNumber + 1, totalPages, mappedItems);
+    final Uri? prevUrl = Uri.tryParse(previous ?? '');
+    final String? prevOffset = prevUrl?.queryParameters["offset"];
+    if (prevUrl != null && prevOffset != null) {
+      final nextPageNumber = (int.parse(prevOffset) / results.length) - 1;
+      return PageEntity(nextPageNumber, totalPages, mappedItems);
     }
 
-    return Page(1, totalPages, mappedItems);
+    return PageEntity(1, totalPages, mappedItems);
   }
 }

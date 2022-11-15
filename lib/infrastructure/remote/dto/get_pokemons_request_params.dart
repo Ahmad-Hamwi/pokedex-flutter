@@ -8,7 +8,7 @@ class PaginationRequestParams {
     num pageNumber,
     num pageSize,
   )   : limit = pageSize,
-        offset = pageNumber * pageSize;
+        offset = (pageNumber - 1) * pageSize;
 
   JSON get queryParams => {
         "limit": limit,

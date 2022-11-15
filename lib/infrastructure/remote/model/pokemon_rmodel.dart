@@ -3,6 +3,7 @@ import 'package:pokedex/domain/entity/entity.dart';
 import 'package:pokedex/domain/entity/pokemon_entity.dart';
 import 'package:pokedex/domain/entity/pokemon_stat_entity.dart';
 import 'package:pokedex/domain/entity/pokemon_type_entity.dart';
+import 'package:pokedex/infrastructure/remote/model/pokemon_sprites_rmodel.dart';
 import 'package:pokedex/infrastructure/remote/model/remote_model.dart';
 import 'package:pokedex/infrastructure/util/json_util.dart';
 import 'package:pokedex/infrastructure/remote/model/pokemon_stat_rmodel.dart';
@@ -20,6 +21,7 @@ class PokemonRemoteModel extends RemoteModel {
   final num? weight;
   final List<PokemonStatRemoteModel>? stats;
   final String? url;
+  final PokemonSpritesRemoteModel? sprites;
 
   PokemonRemoteModel(
     this.name,
@@ -28,6 +30,7 @@ class PokemonRemoteModel extends RemoteModel {
     this.weight,
     this.stats,
     this.url,
+    this.sprites,
   );
 
   factory PokemonRemoteModel.fromJson(JSON json) =>
@@ -37,21 +40,26 @@ class PokemonRemoteModel extends RemoteModel {
   PokemonEntity mapToEntity() => PokemonEntity(
         UrlUtils.extractLastUrlParamAsInt(url!)!,
         name,
-        types!
-            .map((e) => PokemonTypeEntity(
-                  UrlUtils.extractLastUrlParamAsInt(e.type.url)!,
-                  e.type.name,
-                ))
-            .toList(),
-        height!,
-        weight!,
-        stats!
-            .map((e) => PokemonStatEntity(
-                  UrlUtils.extractLastUrlParamAsInt(e.stat.url)!,
-                  e.stat.name,
-                  e.base_stat,
-                ))
-            .toList(),
+        sprites?.other.artWork.front_default,
+        types == null
+            ? null
+            : types!
+                .map((e) => PokemonTypeEntity(
+                      UrlUtils.extractLastUrlParamAsInt(e.type.url)!,
+                      e.type.name,
+                    ))
+                .toList(),
+        height,
+        weight,
+        stats == null
+            ? null
+            : stats!
+                .map((e) => PokemonStatEntity(
+                      UrlUtils.extractLastUrlParamAsInt(e.stat.url)!,
+                      e.stat.name,
+                      e.base_stat,
+                    ))
+                .toList(),
         false,
       );
 
@@ -62,6 +70,7 @@ class PokemonRemoteModel extends RemoteModel {
     num? weight,
     List<PokemonStatRemoteModel>? stats,
     String? url,
+    PokemonSpritesRemoteModel? sprites,
   }) {
     return PokemonRemoteModel(
       name ?? this.name,
@@ -70,6 +79,7 @@ class PokemonRemoteModel extends RemoteModel {
       weight ?? this.weight,
       stats ?? this.stats,
       url ?? this.url,
+      sprites ?? this.sprites,
     );
   }
 }
