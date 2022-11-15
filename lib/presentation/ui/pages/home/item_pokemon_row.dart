@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:pokedex/domain/entity/pokemon_entity.dart';
@@ -10,13 +9,11 @@ class ItemPokemonRow extends StatelessWidget {
   final List<PokemonEntity> pokemons;
   final Function(PokemonEntity pokemonEntity, int positionHorizontal)
       onViewDetails;
-  final Function(PokemonEntity toggledEntity) onFavouriteToggled;
 
   const ItemPokemonRow({
     Key? key,
     required this.pokemons,
     required this.onViewDetails,
-    required this.onFavouriteToggled,
     required this.horizontalItemCount,
   }) : super(key: key);
 
@@ -38,7 +35,6 @@ class ItemPokemonRow extends StatelessWidget {
                       clickedItem,
                       pokemons.indexOf(clickedItem),
                     ),
-                    onFavouriteToggled: onFavouriteToggled,
                   ),
                 ),
               );

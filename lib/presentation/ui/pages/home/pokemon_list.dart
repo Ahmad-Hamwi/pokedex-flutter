@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,12 +7,14 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pokedex/di/container.dart';
 import 'package:pokedex/domain/entity/page.dart';
 import 'package:pokedex/domain/entity/pokemon_entity.dart';
+import 'package:pokedex/presentation/bus/events.dart';
 import 'package:pokedex/presentation/ui/bloc/pokemons/pokemons_bloc.dart';
 import 'package:pokedex/presentation/ui/bloc/pokemons/pokemons_event.dart';
 import 'package:pokedex/presentation/ui/bloc/pokemons/pokemons_state.dart';
 import 'package:pokedex/presentation/ui/pages/home/item_pokemon_row.dart';
 import 'package:pokedex/presentation/ui/routes/routes.dart';
 
+import '../../../bus/event_bus.dart';
 import '../../custom/paged_builder_delegate.dart';
 
 class PokemonList extends StatefulWidget {
@@ -20,14 +23,11 @@ class PokemonList extends StatefulWidget {
 
   final bool isFavourite;
 
-  final Function(PokemonEntity toggledEntity) onFavouriteToggled;
-
   const PokemonList({
     Key? key,
     required this.isFavourite,
     required this.width,
     required this.height,
-    required this.onFavouriteToggled,
   }) : super(key: key);
 
   @override
@@ -49,6 +49,8 @@ class _PokemonListState extends State<PokemonList>
 
   late final int itemsCount;
 
+  late final StreamSubscription _pokemonFavToggleEventSubscription;
+
   @override
   void initState() {
     width = widget.width;
@@ -68,7 +70,16 @@ class _PokemonListState extends State<PokemonList>
         widget.isFavourite,
       ));
     });
+
+    _pokemonFavToggleEventSubscription =
+        eventBus.on<FavouriteToggledBusEvent>().listen((event) {
+      if (widget.isFavourite) {
+        _refresh();
+      }
+    });
+
     WidgetsBinding.instance.addObserver(this);
+
     super.initState();
   }
 
@@ -76,6 +87,7 @@ class _PokemonListState extends State<PokemonList>
   void dispose() {
     _pagingController.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    _pokemonFavToggleEventSubscription.cancel();
     super.dispose();
   }
 
@@ -137,7 +149,6 @@ class _PokemonListState extends State<PokemonList>
                         Navigator.of(context).pushNamed(Routes.pokemon,
                             arguments: rowOfItems[positionHorizontal].id);
                       },
-                      onFavouriteToggled: _handleOnFavouriteToggled,
                     ),
                 onRetryOnFail: _retry,
                 onRefresh: _refresh),
@@ -145,13 +156,6 @@ class _PokemonListState extends State<PokemonList>
         },
       ),
     );
-  }
-
-  void _handleOnFavouriteToggled(PokemonEntity pokemonEntity) {
-    if (widget.isFavourite) {
-      _refresh();
-    }
-    widget.onFavouriteToggled(pokemonEntity);
   }
 
   void _appendPage(PageEntity<List<PokemonEntity>> pokemonsPage) {
@@ -171,21 +175,35 @@ class _PokemonListState extends State<PokemonList>
     _pagingController.refresh();
   }
 
-  /// a list of [1, 2, 3, 4, 5, 6, 7, 8, 9] and for example each row can have
-  /// 3 items, the result is [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+  /// a list of [1, 2, 3, 4, 5, 6, 7, 8] and for example each row can have
+  /// 3 items, the result is [[1, 2, 3], [4, 5, 6], [7, 8]]
   PageEntity<List<PokemonEntity>> _mapPageOfItemsToPageOfListOfPokemons(
     PageEntity<PokemonEntity> pageOfItems,
   ) {
     List<List<PokemonEntity>> listOfListOfItems = [];
-    for (int i = 0; i < pageOfItems.items.length; i += itemsCountHorizontal) {
+    final remainder = (pageOfItems.items.length % itemsCountHorizontal);
+    final lengthWithoutRemainder = pageOfItems.items.length - remainder;
+    for (int i = 0; i < lengthWithoutRemainder; i += itemsCountHorizontal) {
       List<PokemonEntity> list = [];
-      for (int j = i;
-          j < i + min(pageOfItems.items.length, itemsCountHorizontal);
-          j++) {
+
+      for (int j = i; j < i + itemsCountHorizontal; j++) {
         list.add(pageOfItems.items[j]);
       }
       listOfListOfItems.add(list);
     }
+
+    final indexOfRemainderList = pageOfItems.items.length - remainder;
+
+    List<PokemonEntity> list = [];
+    for (int j = indexOfRemainderList;
+        j < indexOfRemainderList + remainder;
+        j++) {
+      list.add(pageOfItems.items[j]);
+    }
+    if (list != []) {
+      listOfListOfItems.add(list);
+    }
+
     return PageEntity(
         pageOfItems.pageNumber, pageOfItems.totalPages, listOfListOfItems);
   }

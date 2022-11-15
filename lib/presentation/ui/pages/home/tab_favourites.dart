@@ -1,14 +1,40 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/di/container.dart';
 import 'package:pokedex/presentation/ui/bloc/favourites_count/favourites_count_bloc.dart';
 
+import '../../../bus/event_bus.dart';
+import '../../../bus/events.dart';
 import '../../resources/colors.dart';
 
-class TabFavourites extends StatelessWidget {
+class TabFavourites extends StatefulWidget {
+  TabFavourites({Key? key}) : super(key: key);
+
+  @override
+  State<TabFavourites> createState() => _TabFavouritesState();
+}
+
+class _TabFavouritesState extends State<TabFavourites> {
   final FavouritesCountBloc _favouritesCountBloc = sl<FavouritesCountBloc>();
 
-  TabFavourites({Key? key}) : super(key: key);
+  late final StreamSubscription _pokemonFavToggleEventSubscription;
+
+  @override
+  void initState() {
+    _pokemonFavToggleEventSubscription =
+        eventBus.on<FavouriteToggledBusEvent>().listen((event) {
+      notifyFavouriteToggled();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pokemonFavToggleEventSubscription.cancel();
+    super.dispose();
+  }
 
   void notifyFavouriteToggled() {
     _favouritesCountBloc.add(GetFavouritesCountEvent());

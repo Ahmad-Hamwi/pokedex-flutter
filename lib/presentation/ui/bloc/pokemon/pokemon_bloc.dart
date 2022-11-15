@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:pokedex/domain/entity/pokemon_entity.dart';
 import 'package:pokedex/domain/interactor/toggle_pokemon_favourite.dart';
+import 'package:pokedex/presentation/bus/event_bus.dart';
+import 'package:pokedex/presentation/bus/events.dart';
 
 part 'pokemon_event.dart';
+
 part 'pokemon_state.dart';
 
 class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
@@ -16,6 +19,8 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
             await _toggleFavUseCase.execute(event.pokemonToBeToggled);
 
         emit(PokemonFavToggledState(toggledPokemon));
+
+        eventBus.fire(FavouriteToggledBusEvent(toggledPokemon));
       } catch (e) {
         emit(PokemonErrorFavToggleState(event.pokemonToBeToggled, e));
       }

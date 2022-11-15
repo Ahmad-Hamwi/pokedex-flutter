@@ -73,13 +73,6 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    final favouritesTabKey = GlobalKey();
-
-    void handleOnFavouriteToggled(PokemonEntity pokemonEntity) {
-      (favouritesTabKey.currentWidget as TabFavourites?)
-          ?.notifyFavouriteToggled();
-    }
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -103,7 +96,7 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
                       color: colorTextDark),
                 ),
               ),
-              Tab(child: TabFavourites(key: favouritesTabKey)),
+              Tab(child: TabFavourites()),
             ],
           ),
         ),
@@ -115,13 +108,11 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
                 isFavourite: false,
                 height: height,
                 width: width,
-                onFavouriteToggled: handleOnFavouriteToggled,
               ),
               PokemonList(
                 isFavourite: true,
                 height: height,
                 width: width,
-                onFavouriteToggled: handleOnFavouriteToggled,
               )
             ],
           ),
