@@ -19,6 +19,27 @@ class PokemonEntity extends Entity {
 
   final bool isFavourite;
 
+  PokemonStatEntity? calculateAvgStat() {
+    if (stats == null) {
+      return null;
+    }
+
+    num avgPowerBaseStat = 0;
+    for (var stat in stats!) {
+      avgPowerBaseStat += stat.baseStat;
+    }
+
+    if (stats!.length != 0) {
+      avgPowerBaseStat /= stats!.length;
+    }
+
+    return PokemonStatEntity(
+      -1,
+      "Avg. Power",
+      avgPowerBaseStat,
+    );
+  }
+
   PokemonEntity(
     int id,
     this.name,

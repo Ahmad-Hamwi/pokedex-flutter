@@ -19,19 +19,7 @@ class GetPokemonsUseCase
         ? await _repository.getFavouritePokemons(params)
         : await _repository.getPokemons(params);
 
-    pokemons.map((pokemon) {
-      num avgPowerBaseStat = 0;
-      for (var stat in pokemon.stats!) {
-        avgPowerBaseStat += stat.baseStat;
-      }
-      avgPowerBaseStat /= pokemon.stats!.length;
-      final PokemonStatEntity avgPowerStat = PokemonStatEntity(
-        -1,
-        "Avg. Power",
-        avgPowerBaseStat,
-      );
-      pokemon.stats!.add(avgPowerStat);
-    });
+    pokemons.map((pokemon) => pokemon..stats?.add(pokemon.calculateAvgStat()!));
 
     return pokemons;
   }
