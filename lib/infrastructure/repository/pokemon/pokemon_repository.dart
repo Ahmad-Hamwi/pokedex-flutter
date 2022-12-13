@@ -49,24 +49,19 @@ class PokemonRepositoryImpl extends Repository implements IPokemonRepository {
     final cachedFavouritesIds =
         await _pokemonCacheDatasource.getFavouritePokemons();
 
-    final cachedFavouriteIdsPaginated = [];
-    for (int i = 0; i < cachedFavouritesIds.length; i++) {
-      if (i < (params.pageSize * params.pageNumber) - params.pageSize) continue;
-      if (i >= params.pageSize * params.pageNumber) continue;
-      cachedFavouriteIdsPaginated.add(cachedFavouritesIds[i]);
-    }
-
-    final remoteDetailedPokemons = await Future.wait(
-      cachedFavouriteIdsPaginated
+    final remoteDetailedPokemons = (await Future.wait(
+      cachedFavouritesIds
           .map((id) async => await _pokemonRemoteDatasource.getPokemon(id))
           .toList(),
-    );
+    )).map((pokemon) => pokemon.copyWith(isFavourite: true)).toList();
 
-    return PageEntity(
+    final remoteDetailedPokemonsPage = PageEntity(
       params.pageNumber,
       (cachedFavouritesIds.length / params.pageSize).ceil(),
       remoteDetailedPokemons,
     );
+
+    return remoteDetailedPokemonsPage;
   }
 
   @override
