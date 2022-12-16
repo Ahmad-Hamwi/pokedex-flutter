@@ -19,9 +19,9 @@ class LayoutPokemonProperties extends StatelessWidget {
         child: Row(
           children: [
             _buildProperty("Height", pokemonEntity.height!),
-            SizedBox(width: 42),
+            const SizedBox(width: 42),
             _buildProperty("Weight", pokemonEntity.weight!),
-            SizedBox(width: 42),
+            const SizedBox(width: 42),
             _buildProperty(
                 "BMI", num.parse(pokemonEntity.bmi!.toStringAsFixed(1))),
           ],
@@ -37,16 +37,16 @@ class LayoutPokemonProperties extends StatelessWidget {
       children: [
         Text(
           key,
-          style: TextStyle(
+          style: const TextStyle(
             color: colorTextLight,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           value.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             color: colorTextDark,
             fontSize: 14,
           ),

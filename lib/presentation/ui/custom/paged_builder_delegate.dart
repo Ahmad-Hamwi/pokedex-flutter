@@ -9,6 +9,7 @@ import '../widgets/layout_page_error.dart';
 
 class PagedBuilderDelegate<ItemType>
     extends PagedChildBuilderDelegate<ItemType> {
+  // ignore: annotate_overrides, overridden_fields
   final ItemWidgetBuilder<ItemType> itemBuilder;
   final VoidCallback onRetryOnFail;
   final VoidCallback onRefresh;

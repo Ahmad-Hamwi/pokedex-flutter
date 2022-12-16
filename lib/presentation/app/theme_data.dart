@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pokedex/presentation/ui/resources/colors.dart';
 
 final themeData = ThemeData(
   textTheme: GoogleFonts.notoSansTextTheme(),

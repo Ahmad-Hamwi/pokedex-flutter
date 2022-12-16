@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/domain/entity/pokemon_entity.dart';
 import 'package:pokedex/domain/interactor/toggle_pokemon_favourite.dart';
 import 'package:pokedex/presentation/bus/event_bus.dart';

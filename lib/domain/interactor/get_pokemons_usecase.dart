@@ -1,6 +1,3 @@
-import 'package:pokedex/domain/entity/pokemon_stat_entity.dart';
-import 'package:pokedex/domain/entity/pokemon_type_entity.dart';
-
 import '../entity/page.dart';
 import '../entity/pokemon_entity.dart';
 import '../gateway/repository/pokemon_repository.dart';

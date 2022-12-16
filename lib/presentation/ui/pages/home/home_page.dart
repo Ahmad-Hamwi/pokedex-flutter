@@ -89,8 +89,8 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
               indicatorHeight: 4.0,
               indicatorColor: colorPrimary,
             ),
-            tabs: [
-              const Tab(
+            tabs: const [
+              Tab(
                 child: Text(
                   "All Pokemons",
                   style: TextStyle(

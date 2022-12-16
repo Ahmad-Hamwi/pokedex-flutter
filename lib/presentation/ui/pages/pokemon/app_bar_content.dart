@@ -25,7 +25,7 @@ class PokemonAppBarContent extends StatelessWidget {
               children: [
                 Text(
                   pokemonEntity.name.capitalizeFirstLetter(),
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   pokemonEntity.types!
@@ -33,24 +33,24 @@ class PokemonAppBarContent extends StatelessWidget {
                       .toList()
                       .toString()
                       .replaceAll(RegExp(r"[\[\]]"), ""),
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
           ),
           Container(
             alignment: Alignment.bottomLeft,
-            margin: EdgeInsets.only(bottom: 14, left: 16),
+            margin: const EdgeInsets.only(bottom: 14, left: 16),
             child: Text(
               '#${pokemonEntity.id.toString().padLeft(3, '0')}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           Container(
             alignment: Alignment.bottomRight,
             child: Container(
               width: (MediaQuery.of(context).size.width * 0.4),
-              margin: EdgeInsets.only(right: 16),
+              margin: const EdgeInsets.only(right: 16),
               child: AspectRatio(
                 aspectRatio: 1,
                 child: RemoteImage(src: pokemonEntity.imageUrl),

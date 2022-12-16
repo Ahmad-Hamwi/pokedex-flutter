@@ -10,7 +10,7 @@ import '../../../bus/events.dart';
 import '../../resources/colors.dart';
 
 class TabFavourites extends StatefulWidget {
-  TabFavourites({Key? key}) : super(key: key);
+  const TabFavourites({Key? key}) : super(key: key);
 
   @override
   State<TabFavourites> createState() => _TabFavouritesState();

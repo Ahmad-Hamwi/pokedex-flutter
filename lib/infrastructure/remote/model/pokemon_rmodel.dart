@@ -1,13 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokedex/domain/entity/entity.dart';
 import 'package:pokedex/domain/entity/pokemon_entity.dart';
 import 'package:pokedex/domain/entity/pokemon_stat_entity.dart';
 import 'package:pokedex/domain/entity/pokemon_type_entity.dart';
 import 'package:pokedex/infrastructure/remote/model/pokemon_sprites_rmodel.dart';
-import 'package:pokedex/infrastructure/remote/model/remote_model.dart';
-import 'package:pokedex/infrastructure/util/json_util.dart';
 import 'package:pokedex/infrastructure/remote/model/pokemon_stat_rmodel.dart';
 import 'package:pokedex/infrastructure/remote/model/pokemon_type_rmodel.dart';
+import 'package:pokedex/infrastructure/remote/model/remote_model.dart';
+import 'package:pokedex/infrastructure/util/json_util.dart';
 
 import '../../util/url_util.dart';
 

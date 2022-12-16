@@ -29,7 +29,7 @@ class PokemonEntity extends Entity {
       avgPowerBaseStat += stat.baseStat;
     }
 
-    if (stats!.length != 0) {
+    if (stats!.isNotEmpty) {
       avgPowerBaseStat /= stats!.length;
     }
 

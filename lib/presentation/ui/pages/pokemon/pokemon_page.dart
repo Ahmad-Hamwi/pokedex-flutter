@@ -52,13 +52,13 @@ class _PokemonPageState extends State<PokemonPage> {
               onPressed: () => _pokemonBloc
                   .add(TogglePokemonFavouriteEvent(state.pokemonEntity)),
               label: AnimatedSwitcher(
-                duration: Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 1000),
                 child: state.pokemonEntity.isFavourite
-                    ? Text(
+                    ? const Text(
                         "Remove from favourites",
                         style: TextStyle(color: colorPrimary),
                       )
-                    : Text(
+                    : const Text(
                         "Mark as favourite",
                         style: TextStyle(color: colorWhite),
                       ),
@@ -76,7 +76,7 @@ class _PokemonPageState extends State<PokemonPage> {
                   leadingWidth: 48,
                   leading: GestureDetector(
                     onTap: () => Navigator.of(context).pop(),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back_ios_rounded,
                       color: colorTextDark,
                     ),
@@ -87,7 +87,7 @@ class _PokemonPageState extends State<PokemonPage> {
                     fullOpacityOffset: 250,
                     child: Text(
                       state.pokemonEntity.name.capitalizeFirstLetter(),
-                      style: TextStyle(color: colorTextDark),
+                      style: const TextStyle(color: colorTextDark),
                     ),
                   ),
                   expandedHeight: 266.0,
@@ -101,10 +101,10 @@ class _PokemonPageState extends State<PokemonPage> {
                     <Widget>[
                       LayoutPokemonProperties(
                           pokemonEntity: state.pokemonEntity),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       LayoutPokemonStats(pokemonEntity: state.pokemonEntity),
                       Container(
-                          margin: EdgeInsets.only(top: 5),
+                          margin: const EdgeInsets.only(top: 5),
                           color: colorBackground,
                           height: 300),
                     ],

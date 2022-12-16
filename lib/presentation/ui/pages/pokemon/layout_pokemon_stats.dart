@@ -19,15 +19,15 @@ class LayoutPokemonStats extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(16),
             child: Text(
               "Base Stats",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
-          Divider(height: 0),
-          SizedBox(height: 8),
+          const Divider(height: 0),
+          const SizedBox(height: 8),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: pokemonEntity.stats!
@@ -69,20 +69,20 @@ class LayoutPokemonStats extends StatelessWidget {
             children: [
               Text(
                 key.capitalizeFirstLetter(),
-                style: TextStyle(fontSize: 14, color: colorTextLight),
+                style: const TextStyle(fontSize: 14, color: colorTextLight),
               ),
-              SizedBox(width: 4),
+              const SizedBox(width: 4),
               Text(
                 value.toString(),
-                style: TextStyle(fontSize: 14, color: colorTextDark),
+                style: const TextStyle(fontSize: 14, color: colorTextDark),
               )
             ],
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20),
+            margin: const EdgeInsets.symmetric(vertical: 20),
             height: 4,
             child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: LinearProgressIndicator(
                 value: percent,
                 valueColor: AlwaysStoppedAnimation<Color>(color!),

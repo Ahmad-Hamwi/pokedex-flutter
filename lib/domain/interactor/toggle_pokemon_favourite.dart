@@ -8,6 +8,7 @@ class TogglePokemonFavouriteUseCase extends RPUseCase<PokemonEntity, PokemonEnti
   TogglePokemonFavouriteUseCase(this._repository);
 
   @override
+  // ignore: avoid_renaming_method_parameters
   Future<PokemonEntity> execute(PokemonEntity pokemonToBeFavToggled) {
     final favToggled = pokemonToBeFavToggled.copyWith(
       isFavourite: !pokemonToBeFavToggled.isFavourite,

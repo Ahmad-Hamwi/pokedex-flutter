@@ -3,7 +3,6 @@ import 'package:pokedex/domain/entity/entity.dart';
 import 'package:pokedex/domain/entity/page.dart';
 import 'package:pokedex/infrastructure/remote/model/remote_model.dart';
 import 'package:pokedex/infrastructure/util/json_util.dart';
-import 'package:pokedex/infrastructure/util/url_util.dart';
 
 part 'page.g.dart';
 

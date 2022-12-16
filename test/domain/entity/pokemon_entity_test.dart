@@ -29,7 +29,7 @@ void main() {
     });
 
     test("with null stats", () {
-      final List<PokemonStatEntity>? stats = null;
+      const List<PokemonStatEntity>? stats = null;
 
       final pokemon = PokemonEntity(0, "name", "imageUrl", [], 1, 1, stats, false);
 
