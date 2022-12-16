@@ -38,7 +38,9 @@ Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc fo
 
   - Shown for a brief moment while application is starting.
 
-<img src="./previews/splash.png" height="400"/>
+<p>
+  <img src="./previews/splash.png" height="400"/>
+</p>
 
 ### All Pokemons Tab
   - The Pokemons are fetched from this API: https://pokeapi.co
@@ -46,18 +48,21 @@ Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc fo
   - All Pokemons are listed on this tab.
   - Progress indicators are used while Pokemons are being fetched.
   - Background colors are determined from the Pokemon's type, each mapped to a specific color.
-
-<img src="./previews/data_loaded.png" height="400"/>
-<img src="./previews/page_first_error.png" height="400"/>
-<img src="./previews/page_second_error.png" height="400"/>
+<p>
+  <img src="./previews/data_loaded.png" height="400"/>
+  <img src="./previews/page_first_error.png" height="400"/>
+  <img src="./previews/page_second_error.png" height="400"/>
+</p>
 
 ### Favourites Tab
   - When a Pokemon is marked as favourite by clicking **Mark as favourite** button on the **Pokemon details page**, it should be shown on this tab.
   - The number of Pokemons marked as favourite are shown near the tab's text.
   - Pokemons that are marked as favourite are persistent is stored on disk. So, after a Pokemon is marked as favourite, it should still be shown under **Favourites** tab even after application is closed and started again.
 
-<img src="./previews/favourites_loaded.png" height="400"/>
-<img src="./previews/favourites_empty.png" height="400"/>
+<p>
+  <img src="./previews/favourites_loaded.png" height="400"/>
+  <img src="./previews/favourites_empty.png" height="400"/>
+</p>
 
 ### Pokemon Details Page
   - BMI is calculated using this formula: **weight / (height^2)** without caring any units.
@@ -65,5 +70,7 @@ Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc fo
   - **Remove from favourites** button removes the related Pokemon from the list shown on **Favourites** tab.
   - Bars colors under **Base stats** are determined by the their magnitudes. 
 
-<img src="./previews/details_expanded.png" height="400"/>
-<img src="./previews/details_collapsed.png" height="400"/>
+<p>
+  <img src="./previews/details_expanded.png" height="400"/>
+  <img src="./previews/details_collapsed.png" height="400"/>
+</p>
