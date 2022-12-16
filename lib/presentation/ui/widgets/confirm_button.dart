@@ -15,9 +15,7 @@ class ConfirmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        padding:
-            MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 12)),
-        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 16)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 14)),
         elevation: MaterialStateProperty.all(0),
         backgroundColor: MaterialStateProperty.all(colorPrimary),
       ),

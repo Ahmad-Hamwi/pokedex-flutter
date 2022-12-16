@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/domain/entity/pokemon_entity.dart';
 import 'package:pokedex/presentation/ui/pages/home/pokemon_list.dart';
 import 'package:pokedex/presentation/ui/pages/home/tab_favourites.dart';
 import 'package:pokedex/presentation/ui/resources/colors.dart';
+import 'package:pokedex/presentation/ui/widgets/system_bars_controller.dart';
 
 import '../../custom/md2_indicator.dart';
 
@@ -16,10 +16,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: colorBackground,
-      appBar: _buildAppBar(),
-      body: const _Body(),
+    return SystemBarsController(
+      statusBarIconBrightness: Brightness.light,
+      systemBarColor: Colors.transparent,
+      systemNavigationIconBrightness: Brightness.dark,
+      systemNavigationBarColor: colorWhite,
+      child: Scaffold(
+        backgroundColor: colorBackground,
+        appBar: _buildAppBar(),
+        body: const _Body(),
+      ),
     );
   }
 
@@ -70,9 +76,6 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -103,17 +106,9 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [
-              PokemonList(
-                isFavourite: false,
-                height: height,
-                width: width,
-              ),
-              PokemonList(
-                isFavourite: true,
-                height: height,
-                width: width,
-              )
+            children: const [
+              PokemonList(isFavourite: false),
+              PokemonList(isFavourite: true)
             ],
           ),
         )

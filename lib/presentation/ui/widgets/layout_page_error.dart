@@ -11,20 +11,19 @@ class LayoutPageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Text(
-              "Oops... something went wrong",
-              style: const TextStyle(color: colorTextDark, fontSize: 16),
-            ),
+          const Text(
+            "Oops... something went wrong",
+            style: TextStyle(color: colorTextDark, fontSize: 14),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(width: 12),
           ConfirmButton(
-            child: Text("Retry"),
             onPressed: onRetry,
+            child: const Text("Retry"),
           ),
         ],
       ),

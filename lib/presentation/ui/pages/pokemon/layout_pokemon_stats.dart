@@ -27,6 +27,7 @@ class LayoutPokemonStats extends StatelessWidget {
             ),
           ),
           Divider(height: 0),
+          SizedBox(height: 8),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: pokemonEntity.stats!

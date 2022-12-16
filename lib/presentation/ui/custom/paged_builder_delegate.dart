@@ -27,7 +27,7 @@ class PagedBuilderDelegate<ItemType>
           firstPageProgressIndicatorBuilder: (context) =>
               const CircularProgressWidget(),
           newPageProgressIndicatorBuilder: (context) => const Padding(
-            padding: EdgeInsets.only(top: 32),
+            padding: EdgeInsets.all(32),
             child: CircularProgressWidget(),
           ),
           firstPageErrorIndicatorBuilder: (context) => LayoutError(
