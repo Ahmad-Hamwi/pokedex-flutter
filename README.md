@@ -31,8 +31,9 @@ Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc fo
 - Dio for network calls.
 - Shared Preferences for caching.
 
-## Figma Designs
+## Data API & Figma Designs
 
+- The Pokemons are fetched from this API: https://pokeapi.co
 - You can access to the designs of the application from this [Figma link](https://www.figma.com/file/vP3TT058xIqpOv5zv7cUg9/Pokedex-Assessment?node-id=32%3A83).
 - You need to have a Figma account to see the all details.
 - You can click the **Present** button from top right, to see different flows.
@@ -51,7 +52,6 @@ Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc fo
 </p>
 
 ### All Pokemons Tab
-  - The Pokemons are fetched from this API: https://pokeapi.co
   - Pagination is used since there are lots of Pokemons to be listed coming from API.
   - All Pokemons are listed on this tab.
   - Progress indicators are used while Pokemons are being fetched.
