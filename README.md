@@ -1,7 +1,15 @@
 # Pokedex
 Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc for state management, Widget reusability, Unit Testing with Mockito, Error Handling, and more! 
 
+<div align="middle">
+    <p>
+        <img src="./previews/banner.png" height="500"/>
+    </p>
+</div>
+
 ## Key Points kept in mind while development
+
+<img src="./previews/demo.gif" height="600" align="right"/>
 
 - Code Readability
 - Reusable widget usage
