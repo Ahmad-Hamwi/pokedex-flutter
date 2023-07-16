@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/domain/interactor/get_favourites_count_usecase.dart';
 
 part 'favourites_count_event.dart';
-
 part 'favourites_count_state.dart';
 
 class FavouritesCountBloc
@@ -18,14 +17,12 @@ class FavouritesCountBloc
 
         emit(FavouritesCountLoaded(count));
       } catch (e) {
-        late int count;
+        int? count;
         if (state is FavouritesCountLoaded) {
           count = (state as FavouritesCountLoaded).count;
         }
         emit(FavouritesCountError(count, e));
       }
     });
-
-    add(GetFavouritesCountEvent());
   }
 }

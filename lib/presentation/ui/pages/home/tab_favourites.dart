@@ -17,7 +17,8 @@ class TabFavourites extends StatefulWidget {
 }
 
 class _TabFavouritesState extends State<TabFavourites> {
-  final FavouritesCountBloc _favouritesCountBloc = sl<FavouritesCountBloc>();
+  final FavouritesCountBloc _favouritesCountBloc = sl<FavouritesCountBloc>()
+    ..add(GetFavouritesCountEvent());
 
   late final StreamSubscription _pokemonFavToggleEventSubscription;
 
