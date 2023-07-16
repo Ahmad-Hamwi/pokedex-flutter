@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pokedex/infrastructure/cache/exception/exceptions.dart';
 import 'package:pokedex/infrastructure/cache/provider/app_cache.dart';
@@ -8,12 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../mocks/infrastructure/cache/cache_mocks_registry.mocks.dart';
 
 void main() {
-  group("AppCacheImpl tests", () {
-    final prefsMock = MockSharedPreferences();
-    final appCacheActual = AppCacheImpl(prefsMock);
+  late SharedPreferences prefsMock;
+  late AppCacheImpl sut;
 
+  setUp(() {
+    prefsMock = MockSharedPreferences();
+    sut = AppCacheImpl(prefsMock);
+  });
+
+  group("addPokemonToFavourite", () {
     test(
-      "addPokemonToFavourite adds an Id when cached list is not initialized",
+      "Adds an Id when cached list is not initialized",
       () async {
         when(prefsMock.getStringList(AppCacheImpl.favPokemonKey)) //
             .thenReturn(null);
@@ -21,12 +25,12 @@ void main() {
         when(prefsMock.setStringList(AppCacheImpl.favPokemonKey, ["2"]))
             .thenAnswer((_) async => true);
 
-        await appCacheActual.addPokemonToFavourite(2);
+        await sut.addPokemonToFavourite(2);
       },
     );
 
     test(
-      "addPokemonToFavourite adds an Id when cached list is initialized",
+      "Adds an Id when cached list is initialized",
       () async {
         when(prefsMock.getStringList(AppCacheImpl.favPokemonKey))
             .thenReturn(["1", "3"]);
@@ -35,62 +39,66 @@ void main() {
                 .setStringList(AppCacheImpl.favPokemonKey, ["1", "3", "2"]))
             .thenAnswer((_) async => true);
 
-        await appCacheActual.addPokemonToFavourite(2);
+        await sut.addPokemonToFavourite(2);
       },
     );
+  });
 
+  group("getFavouritePokemons", () {
     test(
-      "getFavouritePokemons gets an empty list if not initialized in shared prefs",
+      "Gets an empty list if not initialized in shared prefs",
       () async {
         when(prefsMock.getStringList(AppCacheImpl.favPokemonKey))
             .thenReturn(null);
 
-        final listOfFavIds = await appCacheActual.getFavouritePokemons();
+        final listOfFavIds = await sut.getFavouritePokemons();
 
         expect(listOfFavIds, []);
       },
     );
 
     test(
-      "getFavouritePokemons gets a list of Ids when initialized in shared prefs",
+      "Gets a list of Ids when initialized in shared prefs",
       () async {
         when(prefsMock.getStringList(AppCacheImpl.favPokemonKey))
             .thenReturn(["1", "3", "2"]);
 
-        final listOfFavIds = await appCacheActual.getFavouritePokemons();
+        final listOfFavIds = await sut.getFavouritePokemons();
 
         expect(listOfFavIds, [1, 3, 2]);
       },
     );
+  });
 
-    test("removePokemonFromFavourite removes an id from list", () async {
+  group("removePokemonFromFavourite", () {
+    test("Removes an id from list", () async {
       when(prefsMock.getStringList(AppCacheImpl.favPokemonKey))
           .thenReturn(["1", "3", "2"]);
 
       when(prefsMock.setStringList(AppCacheImpl.favPokemonKey, ["1", "2"]))
           .thenAnswer((_) async => true);
 
-      await appCacheActual.removePokemonFromFavourite(3);
+      await sut.removePokemonFromFavourite(3);
     });
 
     test(
-      "removePokemonFromFavourite throws NotCachedException when cached list is null",
+      "Throws NotCachedException when cached list is null",
       () async {
         when(prefsMock.getStringList(AppCacheImpl.favPokemonKey))
             .thenReturn(null);
 
-        expect(() => appCacheActual.removePokemonFromFavourite(3),
+        expect(() => sut.removePokemonFromFavourite(3),
             throwsA(isA<NotCachedException>()));
       },
     );
 
     test(
-      "removePokemonFromFavourite throws NotCachedException when removing a non existing Id",
+      "Throws NotCachedException when removing a non existing Id",
       () async {
         when(prefsMock.getStringList(AppCacheImpl.favPokemonKey))
             .thenReturn(["1", "2"]);
 
-        expect(() => appCacheActual.removePokemonFromFavourite(3),
+        expect(() => sut.removePokemonFromFavourite(3),
             throwsA(isA<NotCachedException>()));
       },
     );

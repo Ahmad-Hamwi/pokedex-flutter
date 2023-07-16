@@ -9,36 +9,45 @@ import '../../../../mocks/dart/dart_mocks_registry.mocks.dart';
 import '../../../../mocks/infrastructure/remote/remote_mocks_registry.mocks.dart';
 
 void main() {
-  group("DioApiClient tests", () {
-    final dioErrorMock = MockDioError();
-    final stackTraceMock = MockStackTrace();
-    final dioMock = MockDio();
-    final remoteExceptionFactoryMock = MockIRemoteExceptionFactory();
-    final responseMock = MockResponse();
+  late MockDioError dioErrorMock;
+  late MockStackTrace stackTraceMock;
+  late MockDio dioMock;
+  late MockIRemoteExceptionFactory remoteExceptionFactoryMock;
+  late MockResponse responseMock;
 
-    final dioApiClientActual =
-        DioApiClient(dioMock, remoteExceptionFactoryMock);
+  late DioApiClient sut;
 
-    test("mapError when provided error IS NOT a dio error", () {
+  setUp(() {
+    dioErrorMock = MockDioError();
+    stackTraceMock = MockStackTrace();
+    dioMock = MockDio();
+    remoteExceptionFactoryMock = MockIRemoteExceptionFactory();
+    responseMock = MockResponse();
+
+    sut = DioApiClient(dioMock, remoteExceptionFactoryMock);
+  });
+
+  group("mapError", () {
+    test("Rethrows the custom exception", () {
       expect(
-        () => dioApiClientActual.mapError(
-          Exception("Something other than DioError"),
+        () => sut.mapError(
+          Exception(),
           stackTraceMock,
         ),
         throwsA(isA<Exception>()),
       );
     });
 
-    test("mapError when response is actually null", () {
+    test("Throws the DioError when response is actually null", () {
       when(dioErrorMock.response).thenReturn(null);
 
       expect(
-        () => dioApiClientActual.mapError(dioErrorMock, stackTraceMock),
+        () => sut.mapError(dioErrorMock, stackTraceMock),
         throwsA(isA<DioError>()),
       );
     });
 
-    test("mapError when response is not null and its status code is 500", () {
+    test("Throws a ServerException when response is not null and its status code is 500", () {
       when(dioErrorMock.response).thenReturn(responseMock);
 
       when(remoteExceptionFactoryMock.create(ResponseCode.serverException))
@@ -47,13 +56,13 @@ void main() {
       when(responseMock.statusCode).thenReturn(ResponseCode.serverException);
 
       expect(
-        () => dioApiClientActual.mapError(dioErrorMock, stackTraceMock),
+        () => sut.mapError(dioErrorMock, stackTraceMock),
         throwsA(isA<ServerException>()),
       );
     });
 
     test(
-      "mapError when response is not null and its status code is not handled",
+      "Throws a RemoteException when response is not null and its status code is not handled",
       () {
         when(dioErrorMock.response).thenReturn(responseMock);
 
@@ -65,7 +74,7 @@ void main() {
         when(responseMock.statusCode).thenReturn(responseCode);
 
         expect(
-          () => dioApiClientActual.mapError(dioErrorMock, stackTraceMock),
+          () => sut.mapError(dioErrorMock, stackTraceMock),
           throwsA(isA<RemoteException>()),
         );
       },
