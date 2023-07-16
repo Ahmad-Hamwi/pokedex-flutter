@@ -5,9 +5,8 @@ import 'package:pokedex/infrastructure/cache/exception/exceptions.dart';
 import 'package:pokedex/infrastructure/cache/provider/app_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'app_cache_test.mocks.dart';
+import '../../../../mocks/infrastructure/cache/cache_mocks_registry.mocks.dart';
 
-@GenerateMocks([SharedPreferences])
 void main() {
   group("AppCacheImpl tests", () {
     final prefsMock = MockSharedPreferences();

@@ -1,14 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pokedex/domain/entity/pokemon_entity.dart';
-import 'package:pokedex/domain/gateway/repository/pokemon_repository.dart';
 import 'package:pokedex/domain/interactor/toggle_pokemon_favourite.dart';
 
-import 'toggle_pokemon_favourite_test.mocks.dart';
+import '../../../mocks/domain/entity/entities_mocks_registry.mocks.dart';
+import '../../../mocks/domain/repository/repositories_mocks_registry.mocks.dart';
 
-@GenerateMocks([IPokemonRepository, PokemonEntity])
 void main() {
   group("Test TogglePokemonFavouriteUseCase", () {
     final repoMock = MockIPokemonRepository();

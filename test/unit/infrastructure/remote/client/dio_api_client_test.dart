@@ -1,15 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pokedex/infrastructure/remote/client/dio_api_client.dart';
 import 'package:pokedex/infrastructure/remote/const/api_endpoints.dart';
-import 'package:pokedex/infrastructure/remote/exception/exception_factory.dart';
 import 'package:pokedex/infrastructure/remote/exception/remote_exceptions.dart';
 
-import 'dio_api_client_test.mocks.dart';
+import '../../../../mocks/dart/dart_mocks_registry.mocks.dart';
+import '../../../../mocks/infrastructure/remote/remote_mocks_registry.mocks.dart';
 
-@GenerateMocks([Dio, IRemoteExceptionFactory, DioError, StackTrace, Response])
 void main() {
   group("DioApiClient tests", () {
     final dioErrorMock = MockDioError();
