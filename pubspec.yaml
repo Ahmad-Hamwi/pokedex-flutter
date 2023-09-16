@@ -21,7 +21,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   get_it: ^7.2.0
   event_bus: ^2.0.0
-  google_fonts: ^3.0.1
+  google_fonts: ^6.0.0
 
 dev_dependencies:
   flutter_test:
