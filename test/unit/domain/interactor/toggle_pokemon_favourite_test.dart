@@ -23,7 +23,7 @@ void main() {
   });
 
   group("TogglePokemonFavouriteUseCase", () {
-    test("Makes an `infavourite` pokemon as `favourite`", () async {
+    test("Adds a pokemon to favourites", () async {
       when(repoMock.savePokemon(toggledMock))
           .thenAnswer((_) => Future.value(savedMock));
       when(toBeToggledMock.isFavourite).thenReturn(false);
@@ -36,7 +36,7 @@ void main() {
       expect(toggledFavPokemon.isFavourite, true);
     });
 
-    test("Makes a `favourite` pokemon as `infavourite`", () async {
+    test("Removes a pokemon from favourites", () async {
       when(repoMock.savePokemon(toggledMock))
           .thenAnswer((_) => Future.value(savedMock));
       when(toBeToggledMock.isFavourite).thenReturn(true);
