@@ -1,4 +1,7 @@
 # Pokedex
+![main-ci-cd workflow](https://github.com/Ahmad-Hamwi/pokedex-flutter/actions/workflows/main-ci-cd.yml/badge.svg)
+![development-ci workflow](https://github.com/Ahmad-Hamwi/pokedex-flutter/actions/workflows/development-ci.yml/badge.svg)
+
 Pokedex demonstrates modern Flutter development with Clean Architecture, Bloc for state management, Widget reusability, Unit Testing with Mockito, Error Handling, and more! 
 
 <div align="middle">
