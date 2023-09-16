@@ -2,7 +2,7 @@ import '../entity/pokemon_entity.dart';
 import '../gateway/repository/pokemon_repository.dart';
 import 'base_usecases.dart';
 
-class TogglePokemonFavouriteUseCase extends RPUseCase<PokemonEntity, PokemonEntity> {
+class TogglePokemonFavouriteUseCase extends UseCase<PokemonEntity, PokemonEntity> {
   final IPokemonRepository _repository;
 
   TogglePokemonFavouriteUseCase(this._repository);

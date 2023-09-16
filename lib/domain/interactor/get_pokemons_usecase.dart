@@ -4,7 +4,7 @@ import '../gateway/repository/pokemon_repository.dart';
 import 'base_usecases.dart';
 
 class GetPokemonsUseCase
-    extends RPUseCase<PageEntity<PokemonEntity>, GetPokemonsUseCaseParams> {
+    extends UseCase<PageEntity<PokemonEntity>, GetPokemonsUseCaseParams> {
   final IPokemonRepository _repository;
 
   GetPokemonsUseCase(this._repository);
